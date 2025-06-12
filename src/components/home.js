@@ -9,10 +9,12 @@ const Home = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState();
+  const [error, setError] = useState();
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const u = user.displayName;
+        const u = user.providerId;
         console.log(u);
         setUser(u);
       } else {
@@ -35,11 +37,12 @@ const Home = () => {
       const err = error.message;
       console.log(err);
       console.log(error);
+      setError(err);
     }
   };
   return (
     <>
-      {user ? <p>{user}</p> : <p> </p>}
+      {error ? <p>{error}</p> : <p>{user}</p>}
 
       <Form className="" onSubmit={handler}>
         <FormLabel>Email</FormLabel>
