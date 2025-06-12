@@ -8,12 +8,13 @@ import {
 const Home = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [user, setUser] = useState();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const u = user.phoneNumber;
+        const u = user.displayName;
         console.log(u);
+        setUser(u);
       } else {
         console.log("fhfg");
       }
@@ -38,6 +39,8 @@ const Home = () => {
   };
   return (
     <>
+      {user ? <p>{user}</p> : <p> </p>}
+
       <Form className="" onSubmit={handler}>
         <FormLabel>Email</FormLabel>
         <FormControl
