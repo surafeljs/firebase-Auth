@@ -12,12 +12,14 @@ const Home = () => {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState();
   const [error, setError] = useState();
+  const [success, setSuccess] = useState();
+
   const [emails, setEmails] = useState("");
   const [passwords, setPasswords] = useState("");
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const u = user.providerId;
+        const u = user.email;
         console.log(u);
         setUser(u);
       } else {
@@ -33,7 +35,9 @@ const Home = () => {
       await createUserWithEmailAndPassword(auth, email, password).then(
         async (crediantial) => {
           await sendEmailVerification(crediantial.user);
-          console.log("Verification email sent!");
+          console.log();
+
+          setSuccess("Verification email sent!");
         }
       );
     } catch (error) {
@@ -61,6 +65,7 @@ const Home = () => {
   };
   return (
     <>
+      {success ? <p>{success}</p> : <p>Not Verifid Email</p>}
       {error ? <p>{error}</p> : <p>{user}</p>}
       <Form className="" onSubmit={handler}>
         <FormLabel>Email</FormLabel>
