@@ -3,6 +3,7 @@ import { auth } from "./firebase/db";
 import { Form, FormControl, FormLabel } from "react-bootstrap";
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
 const Home = () => {
@@ -10,7 +11,8 @@ const Home = () => {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState();
   const [error, setError] = useState();
-
+  const [emails, setEmails] = useState("");
+  const [passwords, setPasswords] = useState("");
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -34,16 +36,28 @@ const Home = () => {
         }
       );
     } catch (error) {
-      const err = error.message;
+      const err = error.code;
       console.log(err);
       console.log(error);
       setError(err);
     }
   };
+
+  const signin = async (e) => {
+    e.preventDefault();
+
+    await signInWithEmailAndPassword(auth, emails, password)
+      .then((crediantial) => {
+        const user = crediantial.user;
+        console.log(user);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
   return (
     <>
       {error ? <p>{error}</p> : <p>{user}</p>}
-
       <Form className="" onSubmit={handler}>
         <FormLabel>Email</FormLabel>
         <FormControl
@@ -57,6 +71,23 @@ const Home = () => {
         <FormControl
           type="password"
           onChange={(e) => setPassword(e.target.value)}
+        ></FormControl>
+        <FormControl type="submit"></FormControl>
+      </Form>
+      ---------------------------------------------------------------
+      <Form className="" onSubmit={signin}>
+        <FormLabel>Email</FormLabel>
+        <FormControl
+          required
+          autoFocus
+          type="email"
+          onChange={(e) => setEmails(e.target.value)}
+        ></FormControl>
+        <FormLabel>password</FormLabel>
+
+        <FormControl
+          type="password"
+          onChange={(e) => setPasswords(e.target.value)}
         ></FormControl>
         <FormControl type="submit"></FormControl>
       </Form>
