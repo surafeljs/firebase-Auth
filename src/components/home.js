@@ -1,10 +1,11 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "./firebase/db";
 import { Form, FormControl, FormLabel } from "react-bootstrap";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  sendEmailVerification,
 } from "firebase/auth";
 const Home = () => {
   const [email, setEmail] = useState("");
@@ -30,9 +31,9 @@ const Home = () => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password).then(
-        (crediantial) => {
-          const user = crediantial.user;
-          console.log(user);
+        async (crediantial) => {
+          await sendEmailVerification(crediantial.user);
+          console.log("Verification email sent!");
         }
       );
     } catch (error) {
@@ -45,15 +46,18 @@ const Home = () => {
 
   const signin = async (e) => {
     e.preventDefault();
-
-    await signInWithEmailAndPassword(auth, emails, password)
-      .then((crediantial) => {
-        const user = crediantial.user;
-        console.log(user);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    try {
+      await signInWithEmailAndPassword(auth, emails, passwords)
+        .then((crediantial) => {
+          const user = crediantial.user;
+          console.log(user);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   return (
     <>
