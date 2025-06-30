@@ -129,9 +129,9 @@ const Home = () => {
           className="rounded-lg border border-neutral-600 w-[450px] p-24 "
           onSubmit={handler}
         >
-          <div className=" flex-row text-center mb-8 ">
-            <div>
-              <FormLabel className="text-2xl font-sans font ">Email</FormLabel>
+          <div className=" flex-row text-center mb-4 ">
+            <div className="mb-5">
+              <FormLabel className="text-2xl font-sans  font ">Email</FormLabel>
             </div>
 
             <div>
@@ -139,29 +139,31 @@ const Home = () => {
                 required
                 autoFocus
                 type="email"
-                className="border rounded-lg w-72 h-9 text-lg :text-7xl   "
+                className="border rounded-lg w-72 h-12 text-lg :text-7xl   "
                 onChange={(e) => setEmail(e.target.value)}
               ></FormControl>
             </div>
           </div>
           <div className=" flex-row text-center">
-            <div>
+            <div className="mb-5">
               <FormLabel className="text-2xl font-sans font ">
                 password
               </FormLabel>
             </div>
             <div>
               <FormControl
-                className="border rounded-lg w-72 h-9 text-lg :text-7xl   "
+                className="border rounded-lg w-72 h-12 text-lg :text-7xl   "
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
               ></FormControl>
             </div>
           </div>
-          <FormControl
-            className="text-2xl font-sans font "
-            type="submit"
-          ></FormControl>
+          <div className="flex justify-center mt-14 bg-[#FFE3BB] w-72 rounded-lg p-2 ">
+            <FormControl
+              className="text-2xl font-sans font   "
+              type="submit"
+            ></FormControl>
+          </div>
         </Form>
       </section>
       {/* ---------------------------------------------------------------
