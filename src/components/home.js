@@ -66,32 +66,60 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const data = ["sura", "selam", "bami"];
+    const data = [
+      "sura",
+      "selam",
+      "bami",
+      "miki",
+      "abel",
+      "lidiya",
+      "samuel",
+      "betty",
+      "dani",
+      "marta",
+    ];
     console.log(data);
     const random = Math.floor(Math.random() * data.length);
     const chance = data.at(random);
     console.log(chance);
-    let i = 10;
+    let i = 3;
     const intervalid = setInterval(() => {
       console.log(i);
-      document.body.innerHTML = `<h1>${i}</h1>`;
+
+      // refs.current = document.body.innerHTML = `<h1>${i}</h1>`;
+      if (refs.current) {
+        refs.current.innerHTML = `<h1>${i}</h1>`;
+      }
 
       i--;
       if (i < 3) {
-        document.body.setAttribute("style", "color:red");
+        if (refs.current) {
+          refs.current.setAttribute("style", "color:red");
+        }
 
         if (i < 0) {
           clearInterval(intervalid);
+          if (refs.current) {
+            refs.current.innerHTML = `<h1>Show Result</h1>`;
+          }
+          const chanceFun = () => {
+            if (refs.current) {
+              refs.current.innerHTML = `<h1>${chance}</h1>`;
+            }
+          };
 
-          document.body.innerHTML = `<h1>${chance}</h1>`;
+          if (refs.current) {
+            refs.current.addEventListener("click", chanceFun);
+          }
         }
       }
     }, 1000);
+    return () => clearInterval(intervalid);
   }, []);
 
   return (
     <>
-      <p ref={refs}>sura</p>
+      <h1 className="chance" ref={refs}></h1>
       {success ? <p>{success}</p> : <p>Not Verifid Email</p>}
       {error ? <p>{error}</p> : <p>{user}</p>}
       <Form className="" onSubmit={handler}>
