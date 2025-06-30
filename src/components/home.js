@@ -82,39 +82,41 @@ const Home = () => {
     const random = Math.floor(Math.random() * data.length);
     const chance = data.at(random);
     console.log(chance);
-    let i = 3;
-    const intervalid = setInterval(() => {
-      console.log(i);
+    let i = 10;
+    while (true) {
+      const intervalid = setInterval(() => {
+        console.log(i);
 
-      // refs.current = document.body.innerHTML = `<h1>${i}</h1>`;
-      if (refs.current) {
-        refs.current.innerHTML = `<h1>${i}</h1>`;
-      }
-
-      i--;
-      if (i < 3) {
+        // refs.current = document.body.innerHTML = `<h1>${i}</h1>`;
         if (refs.current) {
-          refs.current.setAttribute("style", "color:red");
+          refs.current.innerHTML = `<h1>${i}</h1>`;
         }
 
-        if (i < 0) {
-          clearInterval(intervalid);
+        i--;
+        if (i < 3) {
           if (refs.current) {
-            refs.current.innerHTML = `<h1>Show Result</h1>`;
+            refs.current.setAttribute("style", "color:red");
           }
-          const chanceFun = () => {
+
+          if (i < 0) {
+            clearInterval(intervalid);
             if (refs.current) {
-              refs.current.innerHTML = `<h1>${chance}</h1>`;
+              refs.current.innerHTML = `<h1>Show Result</h1>`;
             }
-          };
+            const chanceFun = () => {
+              if (refs.current) {
+                refs.current.innerHTML = `<h1>${chance}</h1>`;
+              }
+            };
 
-          if (refs.current) {
-            refs.current.addEventListener("click", chanceFun);
+            if (refs.current) {
+              refs.current.addEventListener("click", chanceFun);
+            }
           }
         }
-      }
-    }, 1000);
-    return () => clearInterval(intervalid);
+      }, 1000);
+      return () => clearInterval(intervalid);
+    }
   }, []);
 
   return (
