@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "./firebase/db";
 import { Form, FormControl, FormLabel } from "react-bootstrap";
 import {
@@ -8,7 +8,6 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 const Home = () => {
-  const refs = useRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState();
@@ -65,65 +64,8 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    const data = [
-      "sura",
-      "selam",
-      "bami",
-      "miki",
-      "abel",
-      "lidiya",
-      "samuel",
-      "betty",
-      "dani",
-      "marta",
-    ];
-    console.log(data);
-    const random = Math.floor(Math.random() * data.length);
-    const chance = data.at(random);
-    console.log(chance);
-    let i = 10;
-    while (true) {
-      const intervalid = setInterval(() => {
-        console.log(i);
-
-        // refs.current = document.body.innerHTML = `<h1>${i}</h1>`;
-        if (refs.current) {
-          refs.current.innerHTML = `<h1>${i}</h1>`;
-        }
-
-        i--;
-        if (i < 3) {
-          if (refs.current) {
-            refs.current.setAttribute("style", "color:red");
-          }
-
-          if (i < 0) {
-            clearInterval(intervalid);
-            if (refs.current) {
-              refs.current.innerHTML = `<h1>Show Result</h1>`;
-            }
-            const chanceFun = () => {
-              if (refs.current) {
-                refs.current.innerHTML = `<h1>${chance}</h1>`;
-              }
-            };
-
-            if (refs.current) {
-              refs.current.addEventListener("click", chanceFun);
-            }
-          }
-        }
-      }, 1000);
-      return () => clearInterval(intervalid);
-    }
-  }, []);
-
   return (
     <>
-      <h1 className="chance" ref={refs}></h1>
-      {success ? <p>{success}</p> : <p>Not Verifid Email</p>}
-      {error ? <p>{error}</p> : <p>{user}</p>}
       <section className="flex justify-center items-center bg-[#00ADB5] h-screen ">
         <Form
           className="rounded-lg border border-neutral-600 w-[450px] p-24 "
@@ -158,6 +100,9 @@ const Home = () => {
               ></FormControl>
             </div>
           </div>
+          {success ? <p>{success}</p> : <p> </p>}
+          {error ? <p>{error}</p> : <p>{user}</p>}
+
           <div className="flex justify-center mt-14 bg-[#FFE3BB] w-72 rounded-lg p-2 ">
             <FormControl
               className="text-2xl font-sans font   "
